@@ -5,10 +5,10 @@ docker buildx build \
 --label org.opencontainers.image.description='container for rnaseq analysis and RStudio DEseq2 in biology courses' \
 --label org.opencontainers.image.url=https://github.com/lescai-teaching/rstudio-bio-jupyter \
 --label org.opencontainers.image.source=https://github.com/lescai-teaching/rstudio-bio-jupyter \
---label org.opencontainers.image.version=2.0.1 \
+--label org.opencontainers.image.version=2.1.0 \
 --label org.opencontainers.image.created=2023-01-13T12:39:11.393Z \
 --label org.opencontainers.image.licenses=MIT \
 --platform linux/amd64 \
---tag ghcr.io/lescai-teaching/rstudio-bio-jupyter:2.0.1 \
+--tag ghcr.io/lescai-teaching/rstudio-bio-jupyter:2.1.0 \
 --tag ghcr.io/lescai-teaching/rstudio-bio-jupyter:latest \
 --push .

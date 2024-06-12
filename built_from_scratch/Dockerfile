@@ -1,6 +1,15 @@
-FROM community.wave.seqera.io/library/bioconductor-biostrings_bioconductor-deseq2_bioconductor-enrichplot_bioconductor-fgsea_pruned:47f6f6dd9614b1d8
+FROM gitpod/workspace-full
+
+ENV MAMBA_ROOT_PREFIX /usr/local
+RUN brew install micromamba
 
 USER root
+
+COPY conda_env.yml /tmp/conda_env.yml
+
+RUN micromamba install -y -n base -f /tmp/conda_env.yml \
+    && micromamba install -y -n base conda-forge::procps-ng \
+    && micromamba clean -a -y
 
 RUN apt-get update && \
     apt-get install -y gdebi-core wget && \
@@ -8,8 +17,8 @@ RUN apt-get update && \
     gdebi -n rstudio-server-2023.09.1-494-amd64.deb && \
     rm rstudio-server-2023.09.1-494-amd64.deb
 
-RUN useradd -m -s /bin/bash rstudio
-RUN echo "rstudio:rstudio" | chpasswd
+RUN echo "gitpod:rstudio" | chpasswd
+RUN usermod -aG sudo gitpod
 
 RUN apt-get install libharfbuzz-dev libfribidi-dev -y
 
@@ -26,9 +35,7 @@ RUN Rscript install_packages.R
 RUN rm *.tar.gz
 RUN rm install_packages.R
 
-USER rstudio
-WORKDIR /home/rstudio
-
 RUN pip install --no-cache-dir jupyter-rsession-proxy==2.1.0
 
-CMD ["sudo rstudio-server start"]
+USER gitpod
+WORKDIR /home/gitpod
