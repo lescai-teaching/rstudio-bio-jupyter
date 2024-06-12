@@ -1,0 +1,3 @@
+FROM ghcr.io/lescai-teaching/rstudio-bio-jupyter:e4aa48f3f0a6ca39
+
+COPY .Rprofile /opt/conda/lib/R/.Rprofile
