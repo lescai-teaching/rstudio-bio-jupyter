@@ -12,6 +12,9 @@ RUN micromamba remove -y -n base jupyterlab \
 
 RUN pip install --no-cache-dir jupyter-rsession-proxy --upgrade
 
-CMD ["rstudio-server", "start", "&&", "nohup", "jupyter", "lab", "--ip", "0.0.0.0", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''", "&"]
+COPY init.sh /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/init.sh
 
 USER gitpod
+
+ENTRYPOINT [ "/usr/local/bin/init.sh" ]
