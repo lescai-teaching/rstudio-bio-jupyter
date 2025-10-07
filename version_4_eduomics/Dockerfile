@@ -14,23 +14,24 @@ USER root
 ENV PATH="$MAMBA_ROOT_PREFIX/bin:$PATH"
 
 RUN apt-get update && \
-    apt-get install -y gdebi-core wget && \
+    apt-get install -y --no-install-recommends \
+        gdebi-core \
+        libfribidi-dev \
+        libharfbuzz-dev \
+        sudo \
+        wget && \
     wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2025.09.1-401-amd64.deb && \
-    gdebi rstudio-server-2025.09.1-401-amd64.deb && \
-    rm rstudio-server-2025.09.1-401-amd64.deb
+    gdebi -n rstudio-server-2025.09.1-401-amd64.deb && \
+    rm rstudio-server-2025.09.1-401-amd64.deb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN useradd gitpod
-RUN echo "gitpod:rstudio" | chpasswd
-RUN usermod -aG sudo gitpod
+RUN echo "gitpod:rstudio" | chpasswd && \
+    usermod -aG sudo gitpod && \
+    echo "gitpod ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/gitpod && \
+    chmod 0440 /etc/sudoers.d/gitpod
 
-RUN apt-get install libharfbuzz-dev libfribidi-dev -y
-
-RUN echo "gitpod:rstudio" | chpasswd
-RUN usermod -aG sudo gitpod
-
-RUN apt-get install libharfbuzz-dev libfribidi-dev -y
-
-RUN pip install --no-cache-dir jupyter-rsession-proxy==2.1.0
+RUN micromamba run -n base pip install --no-cache-dir jupyter-rsession-proxy==2.1.0
 
 COPY init.sh /usr/local/bin/init.sh
 RUN chmod +x /usr/local/bin/init.sh

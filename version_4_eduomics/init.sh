@@ -1,3 +1,10 @@
-#!/bin/bash
-sudo rstudio-server start
-jupyter lab --ip 0.0.0.0 --no-browser --NotebookApp.token='' --NotebookApp.password=''
+#!/usr/bin/env bash
+set -euo pipefail
+
+sudo /usr/bin/rstudio-server start
+
+exec jupyter lab \
+    --ip 0.0.0.0 \
+    --no-browser \
+    --NotebookApp.token='' \
+    --NotebookApp.password=''

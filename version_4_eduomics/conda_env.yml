@@ -3,6 +3,10 @@ channels:
   - bioconda
 ## bioconductor release 3.20 - frame all versions to that release
 dependencies:
+  - conda-forge::python=3.11
+  - conda-forge::pip=24.2
+  - conda-forge::jupyterlab=4.2.5
+  - conda-forge::ipykernel=6.29.5
   - conda-forge::r-tidyverse=2.0.0
   - bioconda::bioconductor-biostrings=2.74.0 # the version in release is 2.74.1
   - conda-forge::wget=1.21.4
