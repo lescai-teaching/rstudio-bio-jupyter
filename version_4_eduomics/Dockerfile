@@ -26,7 +26,8 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo "gitpod:rstudio" | chpasswd && \
+RUN useradd -m -s /bin/bash gitpod && \
+    echo "gitpod:rstudio" | chpasswd && \
     usermod -aG sudo gitpod && \
     echo "gitpod ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/gitpod && \
     chmod 0440 /etc/sudoers.d/gitpod
