@@ -1,6 +1,6 @@
 FROM mambaorg/micromamba:1.5.10-noble
 
-COPY --chown=$MAMBA_USER:$MAMBA_USER conda.yml /tmp/conda.yml
+COPY --chown=$MAMBA_USER:$MAMBA_USER conda_env.yml /tmp/conda.yml
 
 RUN micromamba install -y -n base -f /tmp/conda.yml \
     && micromamba install -y -n base conda-forge::procps-ng \
@@ -19,6 +19,7 @@ RUN apt-get update && \
     gdebi rstudio-server-2025.09.1-401-amd64.deb && \
     rm rstudio-server-2025.09.1-401-amd64.deb
 
+RUN useradd gitpod
 RUN echo "gitpod:rstudio" | chpasswd
 RUN usermod -aG sudo gitpod
 
