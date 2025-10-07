@@ -1,0 +1,14 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - conda-forge::r-tidyverse=2.0.0
+  - bioconda::bioconductor-biostrings=2.68.1
+  - conda-forge::wget=1.21.4
+  - bioconda::bioconductor-deseq2=1.46.0
+  - bioconda::bioconductor-tximport=1.34.0
+  - conda-forge::r-pheatmap=1.0.12
+  - bioconda::bioconductor-org.hs.eg.db=3.17.0
+  - bioconda::bioconductor-clusterprofiler=4.8.1
+  - bioconda::bioconductor-dose=4.0.0
+  - bioconda::salmon=1.10.3
