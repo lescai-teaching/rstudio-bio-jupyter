@@ -19,7 +19,9 @@ RUN apt-get update && \
         libfribidi-dev \
         libharfbuzz-dev \
         sudo \
-        wget && \
+        wget \
+        git \
+        git-lfs && \
     wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2025.09.1-401-amd64.deb && \
     gdebi -n rstudio-server-2025.09.1-401-amd64.deb && \
     rm rstudio-server-2025.09.1-401-amd64.deb && \
@@ -33,6 +35,9 @@ RUN useradd -m -s /bin/bash gitpod && \
     chmod 0440 /etc/sudoers.d/gitpod
 
 RUN micromamba run -n base pip install --no-cache-dir jupyter-rsession-proxy==2.1.0
+
+# overwrite default config to point rstudio server to the R path installed under conda
+COPY rserver.conf /etc/rstudio/rserver.conf
 
 COPY init.sh /usr/local/bin/init.sh
 RUN chmod +x /usr/local/bin/init.sh
