@@ -28,7 +28,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN useradd -m -s /bin/bash gitpod && \
+ARG UID=33333
+ARG GID=33333
+
+RUN groupadd -g ${GID} gitpod && \
+    useradd -m -s /bin/bash -u ${UID} -g ${GID} gitpod && \
     echo "gitpod:rstudio" | chpasswd && \
     usermod -aG sudo gitpod && \
     echo "gitpod ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/gitpod && \
