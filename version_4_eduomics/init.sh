@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euxo pipefail
 
-exec sudo rstudio-server start
+env >/home/gitpod/.Renviron
 
-exec jupyter lab \
+sudo rstudio-server start
+
+jupyter lab \
     --ip 0.0.0.0 \
     --no-browser \
     --NotebookApp.token='' \
